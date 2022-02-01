@@ -1,0 +1,23 @@
+{% load static %}
+{% get_media_prefix as MEDIA_URL %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download</title>
+</head>
+
+<body>
+
+    <img src="{{MEDIA_URL}}{{url}}" height="200px" width="200px" align="center">
+    <!-- {{message}}{{message1}} -->
+
+<br><br>
+<a href="{{MEDIA_URL}}{{url}}">View</a><br><br>
+<a href="{{MEDIA_URL}}{{url}}" download>Download</a>
+
+</body>
+</html> 
+
+{%endblock%}
