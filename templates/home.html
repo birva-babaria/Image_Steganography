@@ -15,18 +15,23 @@
 </head>
 <body>
     <h1 align="center">Image Steganogaphy</h1>
-    <form action="normalUpload" method="post" enctype="multipart/form-data">{%csrf_token%}
+    <h3>Encode</h3>
+    <form action="encode" method="post" enctype="multipart/form-data">{%csrf_token%}
     Enter message to encrypt in image:<input type="text" name="message" id="speechToText" placeholder="message" value={{msg}}>
     or click here to record the message
     <button type="button" class="btn btn-dark" id="" onclick="record()">Record</button>
     <br>
     Upload your image for Encoding:  <input type="file" name="myfile"  >
-    <input type="submit" value="Submit" >
-    
-    
+    <input type="submit" value="Encode" >
     </form>
 
-
+    <h3>Decode</h3>
+    <form action="decode" method="post" enctype="multipart/form-data">{%csrf_token%}
+        <br>
+        Upload your image for Decoding the message:  <input type="file" name="myfile"  >
+        <input type="submit" value="Decode" >
+    </form>
+    
     <script>
         function record(){
             var recognition=new webkitSpeechRecognition();

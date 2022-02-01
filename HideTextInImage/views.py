@@ -1,27 +1,28 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-import speech_recognition as sr
+# import speech_recognition as sr
 from django.core.files.storage import FileSystemStorage
 import numpy as np
 from PIL import Image
 from pathlib import Path
+
 # Create your views here.
 def home(request):
     return render(request,'home.html')
 
-def micro(request):
-    if request.method=="GET":
-        message = request.GET['record']
-        rec = sr.Recognizer()
-        with sr.Microphone() as mic:
-            print('Please say the message that you want to hide...')
-            audio = rec.listen(mic)
-            print('Message recorded!')
-            message = rec.recognize_google(audio)
-        return render(request,"home.html",{'msg':message})
+# def micro(request):
+#     if request.method=="GET":
+#         message = request.GET['record']
+#         rec = sr.Recognizer()
+#         with sr.Microphone() as mic:
+#             print('Please say the message that you want to hide...')
+#             audio = rec.listen(mic)
+#             print('Message recorded!')
+#             message = rec.recognize_google(audio)
+#         return render(request,"home.html",{'msg':message})
 
-def normalUpload(request):
+def encode(request):
     if request.method=="POST":
         myfile=request.FILES['myfile']
         message=request.POST['message']
@@ -55,5 +56,38 @@ def normalUpload(request):
             enc_img = Image.fromarray(array.astype('uint8'), img.mode)
             enc_img.save(str(BASE_DIR)+url)
             message1="Image Encoded Successfully"
-            return render(request,"download.html",{'url':filename,'message':message,'message1':message1})
-    
+            return render(request,"encDownload.html",{'url':filename,'message':message,'message1':message1})
+
+def decode(request):
+        if request.method=="POST":
+            myfile=request.FILES['myfile']
+            BASE_DIR = Path(__file__).resolve().parent.parent
+            fs=FileSystemStorage()
+            filename=fs.save(myfile.name,myfile)
+            url=fs.url(filename)
+            url1=str(BASE_DIR)+url
+            img = Image.open(url1, 'r')
+            array = np.array(list(img.getdata()))
+            if img.mode == 'RGB':
+                n = 3
+            elif img.mode == 'RGBA':
+                n = 4
+            total_pixels = array.size//n
+            hidden_bits = ""
+            for p in range(total_pixels):
+                for q in range(0, 3):
+                    hidden_bits += (bin(array[p][q])[2:][-1])
+            hidden_bits = [hidden_bits[i:i+8] for i in range(0, len(hidden_bits), 8)]
+            message = ""
+            for i in range(len(hidden_bits)):
+                if message[-6:] == "$ka1b2":
+                    break
+                else:
+                    message += chr(int(hidden_bits[i], 2))
+            msg = ""
+            err_msg = ""
+            if "$ka1b2" in message:
+                msg = message[:-6]
+            else:
+                err_msg = "No Hidden Message Found"
+            return render(request,"decDownload.html",{'msg':msg, 'err_msg': err_msg})

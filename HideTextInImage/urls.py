@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path('normalUpload',views.normalUpload,name="normalUpload"),
-    path('micro',views.micro,name="micro"),
+    path('encode', views.encode, name="encode"),
+    path('decode', views.decode, name="decode"),
+    # path('micro', views.micro, name="micro"),
 ]
