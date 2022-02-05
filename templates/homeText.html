@@ -1,0 +1,54 @@
+{% load static %}
+{% get_media_prefix as MEDIA_URL %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <title>Home</title>
+</head>
+<body>
+    <h1 align="center">Image Steganogaphy</h1>
+    <h3>Encode</h3>
+    <form action="encode" method="post" enctype="multipart/form-data">{%csrf_token%}
+    Enter message to encrypt in image:<input type="text" name="message" id="speechToText" placeholder="message" value={{msg}}>
+    or click here to record the message
+    <button type="button" class="btn btn-dark" id="" onclick="record()">Record</button>
+    <br>
+    Upload your image for Encoding:  <input type="file" name="myfile"  >
+    <input type="submit" value="Encode" >
+    </form>
+
+    <h3>Decode</h3>
+    <form action="decode" method="post" enctype="multipart/form-data">{%csrf_token%}
+        <br>
+        Upload your image for Decoding the message:  <input type="file" name="myfile"  >
+        <input type="submit" value="Decode" >
+    </form>
+    
+    <script>
+        function record(){
+            var recognition=new webkitSpeechRecognition();
+            recognition.lang="en-GB";
+            recognition.onresult=function(event){
+                document.getElementById('speechToText').value=event.results[0][0].transcript;
+            }
+
+            recognition.start();
+        }
+        
+    </script>
+
+    <!-- {{url}}
+    <img src="{{MEDIA_URL}}{{url}}" height="200px" width="200px">
+    {{message}}
+    {{message1}}-->
+</body> 
+</html>
+{%endblock%}

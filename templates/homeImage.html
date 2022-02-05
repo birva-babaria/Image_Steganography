@@ -1,0 +1,23 @@
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body><form action="encodeImage" method="post" enctype="multipart/form-data">{%csrf_token%}
+    Upload your image which you want to hide:  <input type="file" name="imageToHide"  ><br>
+    Upload your image for Encoding:<input type="file" name="hideImage"  >
+    <input type="submit" value="submit">
+    </form>
+<br><br>
+    <form action="decodeImage" method="post" enctype="multipart/form-data">{%csrf_token%}
+        Upload your image for Decoding:  <input type="file" name="decFile"  >
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>
+{%endblock%}

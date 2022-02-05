@@ -1,7 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-# import speech_recognition as sr
 from django.core.files.storage import FileSystemStorage
 import numpy as np
 from PIL import Image
@@ -11,16 +9,8 @@ from pathlib import Path
 def home(request):
     return render(request,'home.html')
 
-# def micro(request):
-#     if request.method=="GET":
-#         message = request.GET['record']
-#         rec = sr.Recognizer()
-#         with sr.Microphone() as mic:
-#             print('Please say the message that you want to hide...')
-#             audio = rec.listen(mic)
-#             print('Message recorded!')
-#             message = rec.recognize_google(audio)
-#         return render(request,"home.html",{'msg':message})
+def text(request):
+    return render(request,'homeText.html')
 
 def encode(request):
     if request.method=="POST":
