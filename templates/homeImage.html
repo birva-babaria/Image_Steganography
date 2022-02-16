@@ -1,23 +1,65 @@
-{% block content %}
+{% load static %} {% get_media_prefix as MEDIA_URL %} {% block content %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/homeImage.css' %}"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <title>Document</title>
-</head>
-<body><form action="encodeImage" method="post" enctype="multipart/form-data">{%csrf_token%}
-    Upload your image which you want to hide:  <input type="file" name="imageToHide"  ><br>
-    Upload your image for Encoding:<input type="file" name="hideImage"  >
-    <input type="submit" value="submit">
-    </form>
-<br><br>
-    <form action="decodeImage" method="post" enctype="multipart/form-data">{%csrf_token%}
-        Upload your image for Decoding:  <input type="file" name="decFile"  >
-        <input type="submit" value="submit">
-    </form>
-</body>
+  </head>
+  <body>
+    <section id="home" class="d-flex align-items-center">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="left-box">
+          <div class="icon-box">
+            <h4 class="title">Encode</h4>
+            <br />
+            <form action="encodeImage" method="post" enctype="multipart/form-data">
+              {%csrf_token%} 
+              Upload your image which you want to hide:
+              <div class="input-group mb-3">
+                <input type="file" name="imageToHide" class="form-control" id="inputGroupFile02" name="myfile"/>
+              </div>
+              Upload your image for Encoding:
+              <div class="input-group mb-3">
+                <input type="file" name="hideImage" class="form-control" id="inputGroupFile02" name="myfile"/>
+              </div>
+              <br/><br/>
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <input class="btn btn-primary" type="submit" value="Encode" />
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="right-box">
+          <div class="icon-box">
+            <h4 class="title">Decode</h4>
+            <br />
+            <form action="decodeImage" method="post" enctype="multipart/form-data">
+              {%csrf_token%} Upload your image for Decoding:
+              <div class="input-group mb-3">
+                <input type="file" name="decFile" class="form-control" id="inputGroupFile02" name="myfile"/>
+              </div>
+              <br/><br/><br/><br/><br/>
+              <div class="d-grid gap-2 col-12 mx-auto">
+                <input class="btn btn-primary" type="submit" value="Decode" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
 {%endblock%}
