@@ -28,10 +28,17 @@
                 <a class="btn btn-primary left" href="{{MEDIA_URL}}{{url}}" >View Image</a>
                 <a class="btn btn-primary right" href="{{MEDIA_URL}}{{url}}" download>Download Image</a>
               </div>
+              <br />
+            <div class="d-grid gap-4 col-6 mx-auto"><button class="btn btn-dark" onclick="myFunc()">Back</button></div>
             </div>
           </div>
         </div>
       </section>
+      <script>
+        function myFunc() {
+          window.location.href = "/image";
+        }
+      </script>
 </body>
 </html> 
 
