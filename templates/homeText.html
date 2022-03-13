@@ -28,7 +28,7 @@
             <form action="encode" method="post" enctype="multipart/form-data">
               {%csrf_token%} 
               <div class="input-group mb-3">
-                <input type="text" name="message" id="speechToText" value="{{msg}}" class="form-control" placeholder="Enter message or click to record" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" name="message" id="speechToText" value="{{msg}}" class="form-control" placeholder="Enter message or click to record" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                 <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="record()">Record</button>
               </div><br/>
               
@@ -41,7 +41,7 @@
               {%endif%} 
               Upload your image for Encoding:<br/>
               <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02" name="myfile">
+                <input type="file" class="form-control" id="inputGroupFile02" name="myfile" required>
               </div>
               <br/><br/>
               <div class="d-grid gap-2 col-12 mx-auto">
@@ -61,7 +61,7 @@
               {%csrf_token%}
               Upload your image for Decoding the message:
               <div class="input-group mb-3">
-                <input type="file" class="form-control" id="inputGroupFile02" name="myfile">
+                <input type="file" class="form-control" id="inputGroupFile02" name="myfile" required>
               </div>
               <br/><br/><br/><br/><br/>
               <div class="d-grid gap-2 col-12 mx-auto">

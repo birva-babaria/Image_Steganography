@@ -32,7 +32,7 @@
               <!-- {{reqPixel}}<br/>{{totalPixel}} -->
               Upload your image which you want to hide:
               <div class="input-group mb-3">
-                <input type="file" name="imageToHide" class="form-control" id="inputGroupFile02" />
+                <input type="file" name="imageToHide" class="form-control" id="inputGroupFile02" required/>
               </div>
               {%if request.session.messageError1 %}
               <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -43,7 +43,7 @@
               {%endif%}  
               Upload your image for Encoding:
               <div class="input-group mb-3">
-                <input type="file" name="hideImage" class="form-control" id="inputGroupFile02" />
+                <input type="file" name="hideImage" class="form-control" id="inputGroupFile02" required/>
               </div>
               <br/>
               <div class="d-grid gap-2 col-12 mx-auto">
@@ -62,7 +62,7 @@
             <form action="decodeImage" method="post" enctype="multipart/form-data">
               {%csrf_token%} Upload your image for Decoding:
               <div class="input-group mb-3">
-                <input type="file" name="decFile" class="form-control" id="inputGroupFile02" name="myfile"/>
+                <input type="file" name="decFile" class="form-control" id="inputGroupFile02" name="myfile" required/>
               </div>
               <br/><br/><br/><br/><br/>
               <div class="d-grid gap-2 col-12 mx-auto">

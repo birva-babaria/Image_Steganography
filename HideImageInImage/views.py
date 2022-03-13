@@ -1,4 +1,5 @@
 import cv2
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from pathlib import Path
 from PIL import Image
@@ -13,6 +14,8 @@ MEDIA_URL='/media/'
 def image(request):
     if 'messageError1' in request.session:
         del request.session['messageError1']
+    if 'decodeError' in request.session:
+        del request.session['decodeError']
     return render(request, 'homeImage.html')
 
 
@@ -149,8 +152,7 @@ def reconstruct_image(image_pixels, width, height):
             r_binary = image_pixels[idx:idx+8]
             g_binary = image_pixels[idx+8:idx+16]
             b_binary = image_pixels[idx+16:idx+24]
-            image_copy[col, row] = (int(r_binary, 2), int(
-                g_binary, 2), int(b_binary, 2))
+            image_copy[col, row] = (int(r_binary, 2), int(g_binary, 2), int(b_binary, 2))
             idx += 24
     return image
 
@@ -173,13 +175,16 @@ def decode(image):
 
 def decodeImage(request):
     if request.method == "POST":
-        decFile = request.FILES['decFile']
-        BASE_DIR = Path(__file__).resolve().parent.parent
-        fs = FileSystemStorage()
-        filename = fs.save(decFile.name, decFile)
-        url = fs.url(filename)
-        url1 = str(BASE_DIR)+url
-        img = Image.open(url1, 'r')
-        decoded_image = decode(img)
-        decoded_image.save(url1)
+        try:
+            decFile = request.FILES['decFile']
+            BASE_DIR = Path(__file__).resolve().parent.parent
+            fs = FileSystemStorage()
+            filename = fs.save(decFile.name, decFile)
+            url = fs.url(filename)
+            url1 = str(BASE_DIR)+url
+            img = Image.open(url1, 'r')
+            decoded_image = decode(img)
+            decoded_image.save(url1)
+        except:
+            request.session['decodeError'] = "Image can't be decoded!"
         return render(request, "decImage.html", {'url': url1})
